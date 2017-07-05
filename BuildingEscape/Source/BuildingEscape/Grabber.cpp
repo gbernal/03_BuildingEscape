@@ -51,6 +51,7 @@ void UGrabber::SetupInputComponent()
 void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+    if(!PhysicsHandle){return;  }
 
 	// if the physics handle is attached
 	if (PhysicsHandle->GrabbedComponent)
@@ -66,6 +67,8 @@ void UGrabber::Grab() {
 	auto ComponentToGrab = HitResult.GetComponent(); // gets the mesh in our case
 	auto ActorHit = HitResult.GetActor();
 
+    if(!PhysicsHandle){return;  }
+
 	/// If we hit something then attach a physics handle
 	if (ActorHit)
 	{
@@ -80,7 +83,9 @@ void UGrabber::Grab() {
 
 void UGrabber::Release()
 {
-	PhysicsHandle->ReleaseComponent();
+    if(!PhysicsHandle){return;  }
+
+    PhysicsHandle->ReleaseComponent();
 }
 
 const FHitResult UGrabber::GetFirstPhysicsBodyInReach()
